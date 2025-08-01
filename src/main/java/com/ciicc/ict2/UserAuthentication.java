@@ -1,5 +1,6 @@
 package com.ciicc.ict2;
 
+import java.sql.SQLDataException;
 import java.util.*;
 import java.util.regex.*;
 
@@ -140,10 +141,15 @@ public class UserAuthentication {
     public static boolean logInHelper(int number, int pin) {
         int inputNumber = number;
         int inputPIN = pin;
-        // find relevant mobile number
-        UserAccount result = findNumber(inputNumber);
-        // compare values
-        return inputNumber == result.getNumber() && inputPIN == result.getPIdNum();
+        try {
+            // find relevant mobile number
+            UserAccount result = findNumber(inputNumber);
+            // compare values
+            return inputNumber == result.getNumber() && inputPIN == result.getPIdNum();
+        } catch (SQLDataException q) {
+
+        }
+
     }
     public boolean changePIdNum(int oldPIN, int newPIN) throws Exception {
         boolean updated;
@@ -174,18 +180,6 @@ public class UserAuthentication {
          */
     }
 
-    public static void main(String[] args) {
-        // start login sequence
-        Scanner cli = new Scanner(System.in);
-        System.out.println("Already a registered user? (Y/N)");
-        String reply = cli.next();
-        cli.close();
-        boolean isRegistered= (reply.toLowerCase()=="y")? true: false;
-        if (isRegistered) logIn();
-        else {
-            userRegistration();
-        }
-    }
 }
 /*  FOR REFERENCE: Using Pattern-Matcher
     public boolean isValidEmail(String email) {
