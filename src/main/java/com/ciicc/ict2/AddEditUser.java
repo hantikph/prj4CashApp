@@ -4,13 +4,11 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class AddEditUser extends JFrame {
     private JPanel addUserPanel;
-//    private JPanel dataEntryPanel;
+    private JPanel dataEntryPanel;
     private JTextField fullNameField;
     private JTextField emailAddressField;
     private JTextField mobileNumberField;
@@ -18,7 +16,7 @@ public class AddEditUser extends JFrame {
     private JTextField reenterPINField;
     private JButton registerButton;
     private JButton clearFormButton;
-//    private JPanel noticePanel;
+    private JPanel noticePanel;
     private JLabel noticeLabel;
 
     public AddEditUser() {

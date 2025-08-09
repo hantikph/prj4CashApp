@@ -16,7 +16,7 @@ public class CashAppDB {
             conn = DriverManager.getConnection(url, usern, password);
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);  // type 1004, 1008
             ResultSet rs = stmt.executeQuery(sqlqry +"users");
-            System.out.println(rs);
+//            System.out.println(rs);
         } catch (java.sql.SQLException e) {
             System.out.println(e.getLocalizedMessage());
         }
@@ -68,10 +68,10 @@ public class CashAppDB {
             ResultSet rs = stmt.executeQuery(sqlqry +"users WHERE id = "+ id);
             rs.absolute(1);
 
-            System.out.print(rs.getInt(1) +", ");
-            System.out.print(rs.getString(2) +", ");
-            System.out.print(rs.getString(3) +", ");
-            System.out.print(rs.getString(4));
+//            System.out.print(rs.getInt(1) +", ");
+//            System.out.print(rs.getString(2) +", ");
+//            System.out.print(rs.getString(3) +", ");
+//            System.out.print(rs.getString(4));
 
 //            acctID = rs.getInt(1);
             name = rs.getString(2);
@@ -98,10 +98,10 @@ public class CashAppDB {
             ResultSet rs = stmt.executeQuery(String.format("%susers WHERE number = '%s'", sqlqry, number));
             rs.absolute(1);
 
-            System.out.print(rs.getInt(1) +", ");
-            System.out.print(rs.getString(2) +", ");
-            System.out.print(rs.getString(3) +", ");
-            System.out.print(rs.getString(4));
+//            System.out.print(rs.getInt(1) +", ");
+//            System.out.print(rs.getString(2) +", ");
+//            System.out.print(rs.getString(3) +", ");
+//            System.out.print(rs.getString(4));
 
             acctID = rs.getInt(1);
             name = rs.getString(2);
@@ -131,10 +131,10 @@ public class CashAppDB {
 
             rs.insertRow();
 
-            System.out.println("Adding user:");
-            System.out.print(rs.getString(2) +", ");
-            System.out.print(rs.getString(3) +", ");
-            System.out.print(rs.getString(4));
+//            System.out.println("Adding user:");
+//            System.out.print(rs.getString(2) +", ");
+//            System.out.print(rs.getString(3) +", ");
+//            System.out.print(rs.getString(4));
 
             conn.close();
 
@@ -149,10 +149,10 @@ public class CashAppDB {
             ResultSet rs = stmt.executeQuery(sqlqry +"users WHERE id = "+ acctID);
             rs.absolute(1);
 
-            System.out.print(rs.getInt(1) +", ");
-            System.out.print(rs.getString(2) +", ");
-            System.out.print(rs.getString(3) +", ");
-            System.out.print(rs.getString(4));
+//            System.out.print(rs.getInt(1) +", ");
+//            System.out.print(rs.getString(2) +", ");
+//            System.out.print(rs.getString(3) +", ");
+//            System.out.print(rs.getString(4));
 
             rs.updateInt(5, newPIN);
             rs.updateRow();
@@ -169,10 +169,10 @@ public class CashAppDB {
             ResultSet rs = stmt.executeQuery(String.format("%susers WHERE number = %s", sqlqry, number));
             rs.absolute(1);
 
-            System.out.print(rs.getInt(1) +", ");
-            System.out.print(rs.getString(2) +", ");
-            System.out.print(rs.getString(3) +", ");
-            System.out.print(rs.getString(4));
+//            System.out.print(rs.getInt(1) +", ");
+//            System.out.print(rs.getString(2) +", ");
+//            System.out.print(rs.getString(3) +", ");
+//            System.out.print(rs.getString(4));
 
             rs.updateString(2, name);
             rs.updateString(3, email);
@@ -212,9 +212,9 @@ public class CashAppDB {
 
             rs.insertRow();
 
-            System.out.println("Adding user balance:");
-            System.out.print(rs.getString(2) +", ");
-            System.out.print(rs.getDouble(3));
+//            System.out.println("Adding user balance:");
+//            System.out.print(rs.getString(2) +", ");
+//            System.out.print(rs.getDouble(3));
 
             conn.close();
 
@@ -254,9 +254,9 @@ public class CashAppDB {
 
             rs.updateDouble(3, amount);
 
-            System.out.print(rs.getInt(1) +", ");
-            System.out.print(rs.getInt(2) +", ");
-            System.out.print(rs.getDouble(3));
+//            System.out.print(rs.getInt(1) +", ");
+//            System.out.print(rs.getInt(2) +", ");
+//            System.out.print(rs.getDouble(3));
 
             rs.updateRow();
             conn.close();
@@ -312,7 +312,7 @@ public class CashAppDB {
             return t;
 
         } catch (java.sql.SQLException e) {
-            System.err.println("Err getting t_id: "+ e.getLocalizedMessage());
+            System.err.println("Err getting transaction id: "+ e.getLocalizedMessage());
             return null;
         }
     }
@@ -328,12 +328,12 @@ public class CashAppDB {
                         rs.getInt("transferToID"), rs.getInt("transferFromID")));
 
                 System.out.println(rs.getString("trnID"));
-                System.out.println(rs.getDouble("amount"));
-                System.out.println(rs.getString("name"));
-                System.out.println(rs.getInt("account_ID"));
-                System.out.println(rs.getTimestamp("date"));
-                System.out.println(rs.getInt("transferToID"));
-                System.out.println(rs.getInt("transferFromID"));
+//                System.out.println(rs.getDouble("amount"));
+//                System.out.println(rs.getString("name"));
+//                System.out.println(rs.getInt("account_ID"));
+//                System.out.println(rs.getTimestamp("date"));
+//                System.out.println(rs.getInt("transferToID"));
+//                System.out.println(rs.getInt("transferFromID"));
             }
 
             conn.close();
@@ -360,14 +360,14 @@ public class CashAppDB {
 
                     Transactions.results.add(trn);
 
-                    System.out.print(rs.getString("trnID")+", ");
-                    System.out.print(rs.getDouble("amount")+", ");
-                    System.out.print(rs.getString("name")+", ");
-                    System.out.print(rs.getInt("account_ID")+", ");
-                    System.out.print(rs.getTimestamp("date")+", ");
-                    System.out.print(rs.getInt("transferToID")+", ");
-                    System.out.print(rs.getInt("transferFromID"));
-                    System.out.println("EOF");
+//                    System.out.print(rs.getString("trnID")+", ");
+//                    System.out.print(rs.getDouble("amount")+", ");
+//                    System.out.print(rs.getString("name")+", ");
+//                    System.out.print(rs.getInt("account_ID")+", ");
+//                    System.out.print(rs.getTimestamp("date")+", ");
+//                    System.out.print(rs.getInt("transferToID")+", ");
+//                    System.out.print(rs.getInt("transferFromID"));
+//                    System.out.println("EOF");
                 }
             }
         } catch (SQLException e) {
@@ -376,13 +376,13 @@ public class CashAppDB {
     }
 
 
-    public static void main(String[] args) {
-        con();  // test connection
+//    public static void main(String[] args) {
+//        con();  // test connection
 //        addUser("Pedro Parkour", "gagamba@email.kuno", "09123456789", 654321);
 //        getUsers();
 //        getUser(1001);
 //        createTransaction(txn17544367);
 //        Transaction t = getTxnDetails("gc1754447992309CI1020");
 //        getUserTransactions(1020);
-    }
+//    }
 }

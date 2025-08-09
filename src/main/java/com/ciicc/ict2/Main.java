@@ -9,12 +9,12 @@ import java.util.*;
 public class Main extends JFrame {
 
     private JPanel MainPanel;
-//    private JLabel titleBar;
-//    private JPanel userBarPanel;
+    private JLabel titleBar;
+    private JPanel userBarPanel;
     private JButton transferButton;
     private JButton getTransactionsButton;
     private JButton updateChangeButton;
-//    private JPanel userInfoPanel;
+    private JPanel userInfoPanel;
     private JCheckBox toggleBalance;
     private JLabel acctBalanceLabel;
     private JLabel acctIDLabel;

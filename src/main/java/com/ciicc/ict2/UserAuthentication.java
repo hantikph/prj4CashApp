@@ -28,7 +28,7 @@ public class UserAuthentication extends JFrame {
         notification.setText("Register new users or Login");
 
         // built in user information
-        users.add(new UserAccount(1001,"Charles Mijares", "hantikdigital@techie.com", "09185248999", 168888));
+        users.add(new UserAccount(1000,"Charles Mijares", "hantikdigital@techie.com", "09185248999", 168888));
         users.add(new UserAccount(1005, "Michael Jackstone", "kingofpapis@email.kuno", "09112223456", 123456));
         users.add(new UserAccount(1020, "Pedro Parker", "gagamba@email.kuno", "09123456789", 654321));
 
