@@ -42,7 +42,7 @@ public class AddEditUser extends JFrame {
 //                UserAuthentication.userRegistration(userName, emailAddr, mobileNum, pIdNumber); // for List
             CashAppDB.addUser(userName, emailAddr, mobileNum, pIdNumber);
             dispose();
-            new Main();
+            new UserAuthentication();
         });
 
         clearFormButton.addActionListener(e -> {
