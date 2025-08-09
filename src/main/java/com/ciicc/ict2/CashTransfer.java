@@ -20,7 +20,7 @@ public class CashTransfer {
         double senderBal = CheckBalance.checkBalance(sender.getId());
 
         if (transferAmount > 0 && transferAmount <= senderBal) {
-            CashAppDB.createTransaction(txnID, transferAmount, rcvrName, rcvrID, rcvrID, acctID);
+            CashAppDB.createTransaction(txnID, transferAmount, rcvrName, acctID, rcvrID, acctID);
             System.out.println("Verifying transaction");
             // prompt in Main how?
             senderBal -= transferAmount;
