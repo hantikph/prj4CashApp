@@ -204,6 +204,7 @@ public class UserAuthentication extends JFrame {
 //        UserAccount result = findUserByNumber(suppliedNumber);  // for List
         UserAccount result = CashAppDB.getUserByNumber(suppliedNumber);
         accountId = (logInHelper(suppliedNumber, suppliedPIN))? result.getId() : -1;
+        CashAppDB.getUserBalance(accountId);  // update
 
         return accountId;
     }

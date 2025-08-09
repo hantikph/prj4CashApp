@@ -59,32 +59,36 @@ public class CashAppDB {
     }
 
     public static UserAccount getUserByID(int id) {
-        String name = "";
-        String email = "";
-        String mobileNum = "";
-        int pIN = 0;
-        try{
-            con();
-            ResultSet rs = stmt.executeQuery(sqlqry +"users WHERE id = "+ id);
-            rs.absolute(1);
+        String query = "SELECT * FROM users WHERE id = " + id;
 
-//            System.out.print(rs.getInt(1) +", ");
-//            System.out.print(rs.getString(2) +", ");
-//            System.out.print(rs.getString(3) +", ");
-//            System.out.print(rs.getString(4));
+        try (Connection conn = DriverManager.getConnection(url, usern, password);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
 
-//            acctID = rs.getInt(1);
-            name = rs.getString(2);
-            email = rs.getString(3);
-            mobileNum = rs.getString(4);
-            pIN = rs.getInt(5);
+            if (rs.next()) {
+                int acctID = rs.getInt(1);
+                String name = rs.getString(2);
+                String email = rs.getString(3);
+                String mobileNum = rs.getString(4);
+                int pin = rs.getInt(5);
 
-            conn.close();
+                // Debug output
+//                System.out.print(acctID + ", ");
+//                System.out.print(name + ", ");
+//                System.out.print(email + ", ");
+//                System.out.print(mobileNum + ", ");
+//                System.out.println(pin);
+
+                return new UserAccount(acctID, name, email, mobileNum, pin);
+            } else {
+                System.out.println("No user found with ID: " + id);
+                return null;
+            }
 
         } catch (java.sql.SQLException e) {
-            System.out.println(e.getLocalizedMessage());
+            System.out.println("SQL exception: "+ e.getLocalizedMessage());
+            return null;
         }
-        return new UserAccount(id, name, email, mobileNum, pIN);
     }
 
     public static UserAccount getUserByNumber(String number) {
@@ -187,14 +191,21 @@ public class CashAppDB {
     // for CheckBalance
 
     public static boolean findUserBalance(int acctID) {
-        try{
-            con();
-            ResultSet rs = stmt.executeQuery(sqlqry +" balance WHERE user_id = "+ acctID);
+        String qry = sqlqry + "balance WHERE user_id = ?";
+        try (Connection conn = DriverManager.getConnection(url, usern, password);
+                PreparedStatement pstmt = conn.prepareStatement(qry)) {
+            pstmt.setInt(1, acctID);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (CashAppDB.getUserByID(acctID) != null) {
+                    return rs.next();
+                } else {
+                    System.out.println("No such user ID: "+ acctID);
+                    return false;
+                }
 
-            return rs.next();
-
+            }
         } catch (java.sql.SQLException e) {
-            System.out.println(e.getLocalizedMessage());
+            System.out.println("SQL exception: "+ e.getLocalizedMessage());
             return false;
         }
     }
