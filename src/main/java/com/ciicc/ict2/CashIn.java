@@ -44,12 +44,13 @@ public class CashIn extends JFrame {
         acctIDLabel.setText("Account ID: "+ String.valueOf(acctID));
         loggedUserLabel.setText("Logged in as: "+ user.getName());
         transactionLabel.setText("What would you like to do?");
+        noticeLabel.setText("Cash In/Add money or Transfer/Send money");
 
         cashInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CashIn(true);
                 dispose();
+                new CashIn(true);
             }
         });
         transferButton.addActionListener(new ActionListener() {
@@ -77,6 +78,7 @@ public class CashIn extends JFrame {
         cashInButton.setText("Cash In");
         transferButton.setText("Cancel");
         notifsScrollPane.setViewportView(notifsPanel);
+        noticeLabel.setText("Enter amount to add to your account");
 
         cashInButton.addActionListener(new ActionListener() {
             @Override
@@ -92,40 +94,6 @@ public class CashIn extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-            }
-        });
-        cashAmountField.getDocument().addDocumentListener(new DocumentListener() {
-            private void validateAmount() {
-                String input = cashAmountField.getText().trim();
-                double currBal = CheckBalance.checkBalance(Main.loggedAccountID);
-                try {
-                    double inputAmt = Double.parseDouble(input);
-                    if (inputAmt > currBal) {
-                        noticeLabel.setText("Input amount is greater than balance");
-                        noticeLabel.setForeground(Color.ORANGE);
-                    } else {
-                        noticeLabel.setText("Verifying amount");
-                        noticeLabel.setForeground(Color.GREEN.darker());
-                    }
-                } catch (NumberFormatException e) {
-                    noticeLabel.setText("Amount is invalid");
-                    noticeLabel.setForeground(Color.GRAY);
-                }
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                validateAmount();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                validateAmount();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                validateAmount();
             }
         });
     }

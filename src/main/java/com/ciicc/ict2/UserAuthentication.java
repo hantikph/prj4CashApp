@@ -1,8 +1,14 @@
 package com.ciicc.ict2;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class UserAuthentication extends JFrame {
@@ -12,12 +18,14 @@ public class UserAuthentication extends JFrame {
     private JButton logInButton;
     private JTextField inputNumberTextField;
     private JPasswordField inputPINPasswordField;
-    private JTextArea notification;
+    private JLabel notification;
     private JLabel pinLabel;
     private JLabel numberLabel;
 
+
     public static List<UserAccount> users = new ArrayList<>();
 //    static JFrame gUI;
+    private int loginTries = 1;
 
     public UserAuthentication() {
         setTitle("Gee Cash");
@@ -29,7 +37,7 @@ public class UserAuthentication extends JFrame {
 
         // built in user information
         users.add(new UserAccount(1000,"Charles Mijares", "hantikdigital@techie.com", "09185248999", 168888));
-        users.add(new UserAccount(1005, "Michael Jackstone", "kingofpapis@email.kuno", "09112223456", 123456));
+        users.add(new UserAccount(1005, "Michael Jackstone", "kingofpapis@email.kuno", "09112223456", 456789));
         users.add(new UserAccount(1020, "Pedro Parker", "gagamba@email.kuno", "09123456789", 654321));
 
         registerButton.addActionListener(new ActionListener() {
@@ -51,24 +59,87 @@ public class UserAuthentication extends JFrame {
                 try {
 //                    UserAccount userFile = findUserByNumber(number);  // for List
                     UserAccount userFile = CashAppDB.getUserByNumber(number);
-
-                    if (userFile.getNumber().equals(number) && (userFile.getPIdNum() == pin)) {
-                        System.out.println("Success!");
-                        notification.setText(("Login successful"));
-                        Main.setIsLoggedIn(true);
-                        Main.setLoggedAccountID(logIn(number, pin));
-                        logInUser();
-                    } else if (!userFile.getNumber().equals(number)) {
-                        System.out.println("No such user");
-                        notification.setText("User number not on file");
-                    } else {
-                        System.out.println("Invalid login!");
-                        notification.setText("Number and PIN do not match");
-                    }
+                    while (loginTries < 4) {
+                        if (userFile.getNumber().equals(number) && (userFile.getPIdNum() == pin)) {
+                            System.out.println("Success!");
+                            notification.setText(("Login successful"));
+                            Main.setIsLoggedIn(true);
+                            Main.setLoggedAccountID(logIn(number, pin));
+                            logInUser();
+                            break;
+                        } else if (!userFile.getNumber().equals(number)) {
+                            System.out.println("No such user");
+                            notification.setText("User not recognized. Try to Register.");
+                            loginTries++;
+                        } else {
+                            System.out.println("Invalid login!");
+                            notification.setText("Number and PIN do not match");
+                            loginTries++;
+                        }
+                    };
+                    dispose();
                 } catch (Exception x) {
-                    System.err.println(x.getLocalizedMessage());
+                    System.err.println("Exception in UserAuthentication: "+ x.getLocalizedMessage());
                 }
-                dispose();
+            }
+        });
+        inputNumberTextField.getDocument().addDocumentListener(new DocumentListener() {
+            private void validateAsNumerals() {
+                String input = inputNumberTextField.getText().trim();
+                Pattern pattern = Pattern.compile("^\\d{11}$");
+                Matcher matcher = pattern.matcher(input);
+                    if (!matcher.matches()) {
+                        notification.setText("Input must be 11 digits, numbers only");
+                        notification.setForeground(Color.ORANGE);
+                    } else {
+                        notification.setText("Validating input");
+                        notification.setForeground(Color.GREEN.darker());
+                    }
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validateAsNumerals();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validateAsNumerals();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validateAsNumerals();
+            }
+        });
+        inputPINPasswordField.getDocument().addDocumentListener(new DocumentListener() {
+            private void validateAsNumerals() {
+                char[] inputPW = inputPINPasswordField.getPassword();
+                String input = inputPW.toString();
+                Pattern pattern = Pattern.compile("^\\d{6}$");
+                Matcher matcher = pattern.matcher(input);
+                if (!matcher.matches()) {
+                    notification.setText("Input must be exactly 6 digits, numbers only");
+                    notification.setForeground(Color.ORANGE);
+                } else {
+                    notification.setText("Validating input...");
+                    notification.setForeground(Color.GREEN.darker());
+                }
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validateAsNumerals();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validateAsNumerals();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validateAsNumerals();
             }
         });
     }

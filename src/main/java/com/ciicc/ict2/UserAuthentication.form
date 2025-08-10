@@ -88,13 +88,17 @@
           </grid>
         </children>
       </scrollpane>
-      <component id="d6f95" class="javax.swing.JTextArea" binding="notification">
+      <component id="6862c" class="javax.swing.JLabel" binding="notification">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="2" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <font name="Arial Rounded MT Bold" size="14"/>
+          <horizontalAlignment value="0"/>
+          <text value="Label"/>
+        </properties>
       </component>
     </children>
   </grid>
