@@ -28,6 +28,8 @@ public class UserAuthentication extends JFrame {
     private int loginTries = 1;
 
     public UserAuthentication() {
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         setTitle("Gee Cash");
         setVisible(true);
         setContentPane(loginPanel);
@@ -59,25 +61,30 @@ public class UserAuthentication extends JFrame {
                 try {
 //                    UserAccount userFile = findUserByNumber(number);  // for List
                     UserAccount userFile = CashAppDB.getUserByNumber(number);
-                    while (loginTries < 4) {
+                        if (userFile == null) {
+                            System.out.println("No such user");
+                            notification.setText("User not recognized. Try to Register.");
+                            loginTries++;
+                            return;
+                        }
                         if (userFile.getNumber().equals(number) && (userFile.getPIdNum() == pin)) {
                             System.out.println("Success!");
                             notification.setText(("Login successful"));
                             Main.setIsLoggedIn(true);
                             Main.setLoggedAccountID(logIn(number, pin));
+                            dispose();
                             logInUser();
-                            break;
-                        } else if (!userFile.getNumber().equals(number)) {
-                            System.out.println("No such user");
-                            notification.setText("User not recognized. Try to Register.");
-                            loginTries++;
                         } else {
                             System.out.println("Invalid login!");
                             notification.setText("Number and PIN do not match");
                             loginTries++;
                         }
-                    };
-                    dispose();
+                        if (loginTries <= 4) {
+                            notification.setText("Too many attempts");
+                            logInButton.setEnabled(false);
+                        }
+                } catch (NumberFormatException nfe) {
+                    notification.setText("PIN must be a 6 digit number");
                 } catch (Exception x) {
                     System.err.println("Exception in UserAuthentication: "+ x.getLocalizedMessage());
                 }

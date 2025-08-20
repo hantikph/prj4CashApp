@@ -135,7 +135,7 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
-        appWin = (!isIsLoggedIn()) ?  new UserAuthentication():  new Main();
+        appWin = (isIsLoggedIn()) ? new Main() : new UserAuthentication();
     }
 }
 //    public Main(boolean t) {
